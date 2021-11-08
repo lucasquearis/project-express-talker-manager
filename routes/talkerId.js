@@ -1,11 +1,10 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
-const data = JSON.parse(fs.readFileSync('./talker.json', 'utf-8'));
-const HTTP_OK_STATUS = 200;
-
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
+  const data = JSON.parse(await fs.readFile('./talker.json', 'utf-8'));
+  const HTTP_OK_STATUS = 200;
   const { id: identificador } = req.params;
-  const filteredTalker = data.find(({ id }) => id === parseInt(identificador, 10));
+  const filteredTalker = data.find(({ id }) => id === +identificador);
   if (!filteredTalker) {
     return res
     .status(404)

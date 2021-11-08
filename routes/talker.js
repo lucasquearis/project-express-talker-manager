@@ -1,9 +1,8 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
-const data = JSON.parse(fs.readFileSync('./talker.json', 'utf-8'));
-const HTTP_OK_STATUS = 200;
-
-module.exports = (req, res) => {
+module.exports = async (_req, res) => {
+  const data = JSON.parse(await fs.readFile('./talker.json', 'utf-8'));
+  const HTTP_OK_STATUS = 200;
   if (!data) return res.status(HTTP_OK_STATUS).send([]);
-  return res.status(HTTP_OK_STATUS).json(data);
+   res.status(HTTP_OK_STATUS).json(data);
 };
