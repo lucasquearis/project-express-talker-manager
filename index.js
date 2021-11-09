@@ -1,9 +1,9 @@
 const express = require('express');
-const fs = require('fs/promises');
 const talker = require('./routes/talker');
 const talkerId = require('./routes/talkerId');
 const auth = require('./middlewares/auth');
 const postTalker = require('./routes/postTalker');
+const putTalker = require('./routes/putTalker');
 const 
 { 
   validToken,
@@ -42,17 +42,7 @@ app.put(
   validAge,
   validTalk,
   validTalkObject,
-  async (req, res) => {
-    const { id } = req.params;
-    const talkers = JSON.parse(await fs.readFile('./talker.json', 'utf-8'));
-    const input = { id: +id, ...req.body };
-    const filteredTalker = talkers.filter((response) => response.id !== +id);
-    const resultado = [...filteredTalker, input];
-    fs.writeFile('./talker.json', JSON.stringify(resultado))
-      .then(() => console.log('Arquivo escrito com sucesso"'))
-      .catch((err) => console.error(`Erro ao escrever o arquivo: ${err.message}`));
-    res.status(200).json(input);
-  },
+  putTalker,
 );
 
 // não remova esse endpoint, e para o avaliador funcionar
