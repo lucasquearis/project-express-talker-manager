@@ -4,6 +4,7 @@ const talkerId = require('./routes/talkerId');
 const auth = require('./middlewares/auth');
 const postTalker = require('./routes/postTalker');
 const putTalker = require('./routes/putTalker');
+const deleteTalker = require('./routes/deleteTalker');
 const 
 { 
   validToken,
@@ -44,6 +45,8 @@ app.put(
   validTalkObject,
   putTalker,
 );
+
+app.delete('/talker/:id', validToken, deleteTalker);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
