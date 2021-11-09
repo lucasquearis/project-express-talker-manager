@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   const data = JSON.parse(await fs.readFile('./talker.json', 'utf-8'));
   const HTTP_OK_STATUS = 200;
   const { id: identificador } = req.params;
-  const filteredTalker = data.find(({ id }) => id === +identificador);
+  const filteredTalker = data.find(({ id }) => id === +identificador) || [];
   if (!filteredTalker) {
     return res
     .status(404)
