@@ -31,7 +31,7 @@ const validAge = async (req, res, next) => {
 
 const validTalk = async (req, res, next) => {
   const { talk } = await req.body;
-  if (!talk || !talk.watchedAt || !talk.rate) {
+  if (!talk || !talk.watchedAt || typeof talk.rate === 'undefined') {
     return res.status(400)
       .json(
         { message: 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios' },
