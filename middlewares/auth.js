@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const token = crypto.randomBytes(8).toString('hex');
 const regxEmail = /^[a-z0-9_.]+@[a-z0-9]+\.[a-z]{2,3}(?:\.[a-z]{2})?$/;
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email) return res.status(400).json({ message: 'O campo "email" é obrigatório' });
   if (!password) {
@@ -15,5 +15,6 @@ module.exports = async (req, res) => {
   if (!regxEmail.test(email)) {
     return res.status(400).json({ message: 'O "email" deve ter o formato "email@email.com"' });
   }
-  return res.status(200).json({ token });
+  res.status(200).json({ token });
+  next();
 };
