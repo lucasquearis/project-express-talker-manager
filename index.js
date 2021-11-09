@@ -5,6 +5,7 @@ const auth = require('./middlewares/auth');
 const postTalker = require('./routes/postTalker');
 const putTalker = require('./routes/putTalker');
 const deleteTalker = require('./routes/deleteTalker');
+const getTalker = require('./routes/getTalker');
 const 
 { 
   validToken,
@@ -21,6 +22,8 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 app.get('/talker', talker);
+
+app.get('/talker/search', validToken, getTalker);
 
 app.get('/talker/:id', talkerId);
 

@@ -1,12 +1,10 @@
-const fs = require('fs/promises');
+const fs = require('fs');
 
 module.exports = async (req, res) => {
-  const talkers = JSON.parse(await fs.readFile('./talker.json', 'utf-8'));
+  const talkers = JSON.parse(await fs.readFileSync('./talker.json', 'utf-8'));
   const input = req.body;
   const inputWithId = { id: (talkers.length + 1), ...input };
   const resultado = [...talkers, inputWithId];
-  fs.writeFile('./talker.json', JSON.stringify(resultado))
-    .then(() => console.log('Arquivo escrito com sucesso"'))
-    .catch((err) => console.error(`Erro ao escrever o arquivo: ${err.message}`));
+  fs.writeFileSync('./talker.json', JSON.stringify(resultado));
   return res.status(201).json(inputWithId);
 };
